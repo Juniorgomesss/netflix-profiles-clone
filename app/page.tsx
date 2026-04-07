@@ -1,65 +1,71 @@
-import Image from "next/image";
+"use client"; 
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import Link from "next/link"; 
+
+const profiles = [
+  { name: 'Gustavo', img: '/assets/users/perfil-1.jpg', alt: 'Avatar gótico' },
+  { name: 'Thiago', img: '/assets/users/perfil-2.jpg', alt: 'Boné azul' },
+  { name: 'Thamiris', img: '/assets/users/perfil-3.jpg', alt: 'Mulher sorrindo' },
+  { name: 'Vini', img: '/assets/users/perfil-4.jpg', alt: 'Sapo simpático' },
+];
+
+export default function ProfileSelection() {
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('theme') !== 'light';
+    }
+    return true; // Padrão Dark
+  });
+
+  const toggleTheme = () => setIsDarkMode(!isDarkMode);
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (isDarkMode) {
+      htmlElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      htmlElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen flex flex-col items-center justify-center transition-colors duration-300 bg-[#f5f5f5] text-[#222] dark:bg-[#141414] dark:text-white py-12">
+      <button
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 text-3xl cursor-pointer hover:scale-110 transition-transform bg-transparent border-none"
+      >
+        {isDarkMode ? '☀️' : '🌙'}
+      </button>
+
+      <h1 className="text-3xl md:text-5xl font-bold mb-8 tracking-wide text-center px-4">
+        Quem está assistindo?
+      </h1>
+
+      <section className="w-full max-w-3xl px-4">
+        <nav>
+          <ul className="flex flex-col sm:flex-row flex-wrap justify-center items-center gap-10 sm:gap-6 md:gap-8 list-none p-0 m-0">
+            {profiles.map((profile, index) => (
+              <li key={index}>
+                <Link href="/home" className="group flex flex-col items-center decoration-none outline-none">
+                  <figure className="flex flex-col items-center m-0">
+                    <img
+                      src={profile.img}
+                      alt={profile.alt}
+                      className="w-28 h-28 md:w-32px md:h-32px rounded-lg object-cover mb-2 border-2 border-transparent group-hover:border-[#222] dark:group-hover:border-white transition-all duration-200"
+                    />
+                    <figcaption className=" text-lg md:text-xl font-medium tracking-wide text-gray-500 group-hover:text-[#222] dark:group-hover:text-white transition-colors duration-200 ">
+                      {profile.name}
+                    </figcaption>
+                  </figure>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </section>
+    </main>
   );
-}
+};
