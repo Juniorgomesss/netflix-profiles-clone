@@ -29,7 +29,7 @@ export const Header = () => {
       
       <div className="flex items-center gap-10">
         <h1 className="text-red-600 text-2xl md:text-4xl font-bold tracking-tighter cursor-pointer">
-          NETFLIX
+          VIDEOFLIX
         </h1>
         <nav className="hidden md:flex gap-5 text-sm font-light">
           <Link href="/home" className="font-medium cursor-default">Início</Link>

@@ -2,7 +2,7 @@
 
 Um clone focado no Front-end da interface da Netflix, desenvolvido com atenção a detalhes de **UX/UI**, micro-interações e design responsivo. 
 
-Este projeto evoluiu do projeto da imerção front-end da alura da tela de seleção de usuários em React puro (Vite) para uma aplicação robusta utilizando o ecossistema moderno do Next.js.
+Este projeto evoluiu de uma simples tela de seleção de usuários em React puro (Vite) para uma aplicação robusta utilizando o ecossistema moderno do Next.js.
 
 ## ✨ Novidades e Implementações Recentes
 
